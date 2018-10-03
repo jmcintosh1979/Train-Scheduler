@@ -53,15 +53,14 @@ database.ref().on("child_added", function(childSnapShot) {
 
   var trainName = childSnapShot.val().name,
       destination = childSnapShot.val().destination,
-      startTrain = childSnapShot.val().startTrain,
+      startTrain = childSnapShot.val().firstTrain,
       frequency = childSnapShot.val().frequency;
 
   var convertedTime = moment(startTrain, "HH:mm").subtract(1, "years"),
       diffTime = moment().diff(moment(convertedTime), "minutes"),
       timeRemain = diffTime % frequency,
       minAway = frequency - timeRemain,
-      nextTrain = moment().add(moment(minAway), "minutes").format("HH:mm");           
-  
+      nextTrain = moment().add(minAway, "minutes").format("HH:mm");             
       console.log(convertedTime);
       console.log(diffTime);
       console.log(timeRemain);
